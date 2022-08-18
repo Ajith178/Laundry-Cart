@@ -4,7 +4,7 @@ import Modal from "./summary";
 import CloseModal from "./closeSummary";
 import { useState, useEffect } from "react";
 import "./body.css";
-
+import {Link} from "react-router-dom"
 const Body = () => {
     const [Orders, SetOrders] = useState([])
     useEffect(() => {
@@ -33,8 +33,8 @@ const Body = () => {
                     <li> <img id="list" src="list.svg" alt="" /></li>
                 </ul>
             </div>
-            {Orders.length === 0 ? <h4 className="emptyTable">Orders | 0  <a className="emptyTableA" href="/orders/">Create</a></h4> : <div className="column2">
-                <h4>Orders | 0  <a href="/orders/">Create</a></h4>
+            {Orders.length === 0 ? <h4 className="emptyTable">Orders | 0  <Link className="emptyTableA" to="/createOrder">Create</Link></h4> : <div className="column2">
+                <h4>Orders | 0  <Link to="/createOrder">Create</Link></h4>
                 <table >
                     <thead>
                         <tr>

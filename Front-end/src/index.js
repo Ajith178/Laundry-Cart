@@ -4,7 +4,8 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import Register from './register';
 import Login from './login';
 import Homie from './homie';
-
+import ProductOrder from './CreateOrder';
+//create
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ root.render(
         <Route path="/" element={<Login/>}></Route>
         <Route path="/register" element={<Register/>}></Route>
         <Route path="/homie" element={<Homie/>}></Route>
+        <Route path="/createOrder" element={<ProductOrder/>}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

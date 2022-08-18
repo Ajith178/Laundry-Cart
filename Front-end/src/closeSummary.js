@@ -19,7 +19,7 @@ const CloseModal = (props) => {
     const handleOrderCancel = (props) => {
        // console.log(props.onClose)
         axios({
-            url: `http://localhost:3003/orders/updateOrder/${props.data}`,
+            url: `http://localhost:3003/${props.data}`,
             method: "PUT",
             data: { data: props.data }
         }

@@ -1,13 +1,15 @@
 import axios from "axios"
 import { useEffect } from "react";
-import {useNavigate} from "react-router-dom"
-import Head from "./head";
-import Body from "./body";
+import Head from "./head"
+import Body from "./body"
 import Footer from "./footer";
-const Orders = ()=>
+import {useNavigate} from "react-router-dom"
+
+const Homie = ()=>
 {
-    const navigate = useNavigate()
+    const navi = useNavigate();
     const token = localStorage.getItem("authToken");
+   
     useEffect(()=> {
         axios({
             method: "GET",
@@ -16,14 +18,13 @@ const Orders = ()=>
                 'Authorization': `${token}`
               }
         }).then((data)=> {
-           // console.log(data.data.data[0].email);
            localStorage.setItem("email",data.data.data[0].email)
            localStorage.setItem("name",data.data.data[0].username)
         }).catch((err)=> {
             console.log(err)
         })
     }, [])
-
+         
     if(token)
     {
     return (
@@ -35,12 +36,13 @@ const Orders = ()=>
     )
  } else {
      console.log("Authorization missing")
-     navigate("/login")
+      navi("/login")
      }
 
-  
+   
 }
-export default Orders;
+
+export default Homie;
 
 
 

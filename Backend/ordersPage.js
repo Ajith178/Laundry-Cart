@@ -1,7 +1,7 @@
 const express = require('express')
 const orderSchema = require("./Schema/OrderSchema/orderSchema")
 const router = express.Router()
-router.get("/", async (req, res) => {
+router.get("/get", async (req, res) => {
     console.log(req.headers.email)
     let email = req.headers.email
     try {
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.put("/updateOrder/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
     console.log(req.params.id)
     await orderSchema.updateOne({ _id: req.params.id }, { status: "order cancelled" }).then((data) => {
         console.log(data)

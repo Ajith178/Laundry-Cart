@@ -2,9 +2,16 @@ import React from "react";
 // import axios from "axios";
 // import { useState, useEffect } from "react";
 import './head.css'
-
+import { useNavigate } from "react-router-dom";
 const Head = () => {
     const username = localStorage.getItem("name")
+    const navi = useNavigate();
+    const logout = ()=>
+    {
+        localStorage.setItem("email","")
+        localStorage.setItem("name","")
+        navi("/")
+    }
     // const [names, setName] = useState([])
     // useEffect(() => {
     //     axios.get("").then((userdata) => {
@@ -20,7 +27,9 @@ const Head = () => {
 
             <ul >
                 <li id="laundry">LAUNDRY</li>
-                <li ><a href="#username" className="dropdown" id="username">{username}</a></li>
+                
+                <li ><a className="dropdown" id="username" onClick={logout}>{username}</a></li>
+                
                 <li ><a href="#home" id="home">Home</a></li>
                 <li ><a href="#pricing" id="pricing">Pricing</a></li>
             </ul>

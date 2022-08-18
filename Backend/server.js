@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const registerModals = require("./Schema/registerSchema/register");
+const orderSchema = require("./Schema/OrderSchema/orderSchema")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
@@ -74,9 +75,60 @@ app.get("/homie",(req,res)=>{
    // console.log(req.headers.authorization)
    //does jwt verify get username or email
    const email = jwt.verify(req.headers.authorization, process.env.key)
-   registerModals.find({email:email}).then((userdata)=>{
+    registerModals.find({email:email}).then((userdata)=>{
     //console.log(userdata[0].password)
     //console.log(userdata)
     res.send({data :userdata})
+
    })
 })
+app.get("/get", async (req, res) => {
+    let email = req.headers.email
+    try {
+        await orderSchema.find({ userId: email }).then((orderlist) => {
+            res.status(200).send(orderlist)
+        })
+    } catch (err) {
+        res.status(403).send("hello")
+    }
+})
+app.put("/:id", async (req, res) => {
+    await orderSchema.updateOne({ _id: req.params.id }, { status: "order cancelled" }).then((data) => {
+        res.status(200).send("updated successfully")
+    }).catch((err) => {
+        res.status(400).send(err)
+    })
+})
+app.post("/createOrder", (req, res) => {
+
+     const now = new Date();
+     const value = {
+       day: "numeric",
+       month: "long",
+       year: "numeric",
+     };
+     const value1 = {
+       hour: "numeric",
+       minute: "numeric",
+       hour12: false,
+     };
+     const day = now.toLocaleDateString("en-Us", value);
+     const time = now.toLocaleTimeString("en-Us", value1);
+     const date = day + " " + time;
+     orderSchema
+     .create({
+       userId: req.body.userId,
+       orderId: req.body.orderId,
+       dateTime: date,
+       storeInfo: req.body.storeInfo,
+       status: req.body.status,
+       items: req.body.items,
+       price: req.body.price,
+     })
+     .then(() => {
+       res.status(200).send("added successfully");
+     })
+     .catch((err) => {
+       res.status(400).send(err);
+     })
+    })
